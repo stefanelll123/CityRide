@@ -87,13 +87,16 @@ create table ISSUES (
   registration_date timestamp not null enable,
   description varchar2(250) not null enable,
   severity varchar2(50) not null enable,
-  borrow_id number(38, 0) not null enable,  
+  borrow_id number(38, 0),
+  bicycle_id number(38, 0),
   type_issue varchar2(20) default 'report',
   
   primary key (id),
   constraint CK_SEVERITY_ENUM check (severity in ('low', 'medium', 'major', 'critical')),  
   constraint FK_ISSUES_ID_BICYCLE foreign key (borrow_id)
-	  references borrow (id) enable,    
+	  references borrow (id) enable,  
+  constraint FK_ISSUES_BICYCLE_ID_BICYCLE foreign key (bicycle_id)
+	  references bicycles (id) enable,       
   constraint CK_type_issue_ENUM check (type_issue in ('report', 'notification', 'time expired'))
 );
 /
