@@ -59,7 +59,7 @@ begin
   commit;
 end sendBibycleNotification;
 
-create or replace procedure getOutBicycle as
+create or replace procedure findOldBicycles as
   cursor c_old_bicycles is 
       (select id, months_between(sysdate, REGISTER_DATE)/12 as years from bicycles where months_between(sysdate, REGISTER_DATE)/12  >= 2);
   v_old_bicycles c_old_bicycles%rowtype;
@@ -80,10 +80,10 @@ begin
     
     sendBibycleNotification('Bicicleta prea batrana.', v_severity, v_old_bicycles.id);
   end loop;
-end getOutBicycle;
+end findOldBicycles;
 
 begin
-  getOutBicycle;
+  findOldBicycles;
 end;
 
 
