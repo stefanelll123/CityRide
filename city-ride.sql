@@ -89,7 +89,7 @@ create table ISSUES (
   severity          varchar2(50)       not null enable,
   borrow_id         number(38, 0),
   bicycle_id        number(38, 0),
-  type_issue        varchar2(20)       default 'report',  
+  type_issue        varchar2(50)       default 'report',  
   STATUS            NVARCHAR2(50)      DEFAULT 'none',
   
   primary key (id),
@@ -115,11 +115,28 @@ CREATE TABLE DEBIT_CARD (
 	  references users (id) enable
 );
 /
+CREATE TABLE MOVE_BICYCLE (
+  id number(38, 0) GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  bicycle_id NUMBER(38, 0) NOT NULL,
+  from_point_id NUMBER(38, 0) NOT NULL,
+  to_point_id NUMBER(38, 0) NOT NULL,
+  move_date TIMESTAMP(6) NOT NULL,
+
+  PRIMARY KEY (id),  
+  constraint FK_MOVE_BICYCLE foreign key (bicycle_id)
+	  references bicycles (id) ENABLE,    
+  constraint FK_MOVE_POINT_1 foreign key (from_point_id)
+	  references pickup_points (id) ENABLE,    
+  constraint FK_MOVE_POINT_2 foreign key (to_point_id)
+	  references pickup_points (id) enable
+);
+/
 -- populare baza de date
 set serveroutput on;
 create or replace procedure detele_all_from_database as
 begin
   DBMS_OUTPUT.PUT_LINE('Stergem inregistrarile din toate tabelele aflate in baza de date.');
+  delete from MOVE_BICYCLE;
   delete from DEBIT_CARD;
   delete from ISSUES;
   delete from BORROW;
@@ -438,6 +455,24 @@ begin
   end loop;
 end;
 /
+CREATE OR REPLACE
+PROCEDURE populate_move_bicycle(p_number_of_inserts INTEGER) AS
+  v_bicycle_id NUMBER(38, 0);
+  v_from_point_id NUMBER(38, 0);
+  v_to_point_id NUMBER(38, 0);
+  v_move_date TIMESTAMP(6);
+BEGIN
+  for i in 1..p_number_of_inserts LOOP
+    SELECT id INTO v_bicycle_id FROM (SELECT id FROM BICYCLES ORDER BY dbms_random.value) WHERE rownum = 1;
+    SELECT id INTO v_from_point_id FROM (SELECT id FROM BICYCLES ORDER BY dbms_random.value) WHERE rownum = 1;
+    SELECT id INTO v_to_point_id FROM (SELECT id FROM BICYCLES ORDER BY dbms_random.value) WHERE rownum = 1;
+    v_move_date := TO_DATE(TRUNC(DBMS_RANDOM.VALUE(TO_CHAR(sysdate - 9*365 - interval '64324' minute, 'J'), TO_CHAR(sysdate, 'J'))), 'J');
+
+    INSERT INTO move_bicycle (bicycle_id, from_point_id, to_point_id, move_date) VALUES (v_bicycle_id, v_from_point_id, v_to_point_id, v_move_date);
+   end loop;
+END;
+
+/
   drop index IX_email_password;
   drop index IX_START_DATE;
   drop index IX_name_address;
@@ -486,6 +521,9 @@ begin
   
   populate_issues(200);
   commit;
+
+  populate_move_bicycle(1000);
+  COMMIT;
 end;
 /
 

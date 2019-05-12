@@ -97,8 +97,6 @@ alter table ISSUES
   add constraint FK_ISSUES_BICYCLE_ID_BICYCLE foreign key (bicycle_id)
 	  references bicycles (id) enable;
 
-
-
 CREATE OR REPLACE PACKAGE BODY CITY_RIDE_PACKAGE AS
 
   function get_next_id(tableName varchar2) 
@@ -177,21 +175,41 @@ CREATE OR REPLACE PACKAGE BODY CITY_RIDE_PACKAGE AS
   procedure find_bicycles_maintenance AS
     v_severities SEVERITIES := NEW SEVERITIES;
     cursor c_bicyles_for_maintenance is 
-        (select i.id from ISSUES "i" 
-            where (SELECT COUNT(*) AS count FROM ISSUES "i1" WHERE i1.BICYCLE_ID = i.ID AND i1.SEVERITY = v_severities.LOW) > 3);
-    v_bicyles_for_maintenance c_bicyles_for_maintenance%TYPE;
+        (select i.id, i.BICYCLE_ID AS b_id from ISSUES i
+            where (SELECT COUNT(*) AS count FROM ISSUES i1 WHERE i1.BICYCLE_ID = i.ID AND i1.SEVERITY = v_severities.LOW) < 3);
+    v_bicyles_for_maintenance c_bicyles_for_maintenance%ROWTYPE;
     v_count NUMBER;
   BEGIN
-    FOR (v_bicyles_for_maintenance : c_bicyles_for_maintenance) LOOP
-      SELECT COUNT(*) INTO v_count FROM issues "i" WHERE i.severity NOT LIKE v_severities.LOW;
-      INSERT INTO ISSUES (REGISTRATION_DATE, DESCRIPTION, SEVERITY, BORROW_ID, TYPE_ISSUE, BICYCLE_ID) 
-        VALUES  (SYSDATE, 'Bicicleta necesa revizie.', V_SEVERITIES.MEDIUM, );
+    FOR v_bicyles_for_maintenance in c_bicyles_for_maintenance LOOP
+      SELECT COUNT(*) INTO v_count FROM issues i WHERE i.severity != v_severities.LOW AND i.id = V_BICYLES_FOR_MAINTENANCE.id;
+      
+      IF(V_COUNT = 0) THEN
+        INSERT INTO ISSUES (REGISTRATION_DATE, DESCRIPTION, SEVERITY, TYPE_ISSUE, BICYCLE_ID) 
+          VALUES  (SYSDATE, 'Bicicleta necesa revizie.', V_SEVERITIES.MEDIUM, 'notification_mentenance', v_bicyles_for_maintenance.b_id);
+      END IF;
     END LOOP;
   END find_bicycles_maintenance;
   
-  function find_most_valueble_points return bicycle_id_list IS
+  function find_most_valueble_points(v_count integer) return bicycle_id_list IS
+    v_to_return_list bicycle_id_list := bicycle_id_list();
+
+    TYPE point_valueble IS TABLE OF NUMBER INDEX BY INTEGER;
+    cursor c_pickup_points is 
+        (select id FROM PICKUP_POINTS);
+    v_pickup_points c_pickup_points%ROWTYPE;
+    v_date TIMESTAMP(6) := CURRENT_TIMESTAMP(6);
+    v_date_start TIMESTAMP(6) := v_date - INTERVAL '1' MONTH ;
+    v_count INTEGER;
   BEGIN
-    RETURN bicycle_id_list();
+    WHILE(v_date_start < v_date) LOOP
+      FOR (v_pickup_points IN c_pickup_points) LOOP
+        SELECT COUNT(*) INTO v_count FROM BICYCLES b JOIN BORROW b1 ON b.id = b1.BICYCLE_ID 
+          WHERE b1.BORROW_DATE < V_DATE_START AND b1.END_DATE > V_DATE_START + INTERVAL '1' DAY;
+          DBMS_OUTPUT.PUT_LINE(V_COUNT);
+      END LOOP;
+    END LOOP;
+
+    RETURN v_to_return_list;
   END find_most_valueble_points;
 
   function find_overdue_borrows return borrow_id_list IS
@@ -231,17 +249,13 @@ CREATE OR REPLACE PACKAGE BODY CITY_RIDE_PACKAGE AS
 END CITY_RIDE_PACKAGE;
 
 DECLARE
-  v_severities SEVERITIES := NEW SEVERITIES;
 BEGIN
-  DELETE FROM issues;
-  COMMIT;
-  DBMS_OUTPUT.PUT_LINE(CITY_RIDE_PACKAGE.COMPARE_SERERITIES(v_severities.CRITICAL, v_severities.MAJOR));
-  CITY_RIDE_PACKAGE.FIND_OLD_BICYCLES();
+  --DELETE FROM issues;
+  --COMMIT;
+  FIND_BICYCLES_MAINTENANCE();
 END;
 /
 SELECT COUNT(*) FROM ISSUES "i";
-
-
 
 
 
