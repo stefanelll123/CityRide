@@ -49,6 +49,5 @@ TRIGGER insert_move_bicycle
     v_move_date := CURRENT_TIMESTAMP();
     
     INSERT INTO move_bicycle (bicycle_id, from_point_id, to_point_id, move_date) VALUES (v_bicycle_id, v_from_point_id, v_to_point_id, v_move_date);
-    COMMIT;
   END insert_move_bicycle;
 
