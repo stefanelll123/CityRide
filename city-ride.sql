@@ -464,8 +464,8 @@ PROCEDURE populate_move_bicycle(p_number_of_inserts INTEGER) AS
 BEGIN
   for i in 1..p_number_of_inserts LOOP
     SELECT id INTO v_bicycle_id FROM (SELECT id FROM BICYCLES ORDER BY dbms_random.value) WHERE rownum = 1;
-    SELECT id INTO v_from_point_id FROM (SELECT id FROM BICYCLES ORDER BY dbms_random.value) WHERE rownum = 1;
-    SELECT id INTO v_to_point_id FROM (SELECT id FROM BICYCLES ORDER BY dbms_random.value) WHERE rownum = 1;
+    SELECT id INTO v_from_point_id FROM (SELECT id FROM PICKUP_POINTS ORDER BY dbms_random.value) WHERE rownum = 1;
+    SELECT id INTO v_to_point_id FROM (SELECT id FROM PICKUP_POINTS ORDER BY dbms_random.value) WHERE rownum = 1;
     v_move_date := TO_DATE(TRUNC(DBMS_RANDOM.VALUE(TO_CHAR(sysdate - 9*365 - interval '64324' minute, 'J'), TO_CHAR(sysdate, 'J'))), 'J');
 
     INSERT INTO move_bicycle (bicycle_id, from_point_id, to_point_id, move_date) VALUES (v_bicycle_id, v_from_point_id, v_to_point_id, v_move_date);
