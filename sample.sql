@@ -1,0 +1,67 @@
+﻿DELETE FROM issues;
+COMMIT;
+SELECT ID FROM BICYCLES "b";
+
+select i.id, i.BICYCLE_ID AS bicycle_id from ISSUES i 
+            where (SELECT COUNT(*) AS count FROM ISSUES i1 WHERE i1.BICYCLE_ID = i.ID AND i1.SEVERITY = 'low') < 3;
+
+INSERT INTO ISSUES (REGISTRATION_DATE, DESCRIPTION, SEVERITY, TYPE_ISSUE, BICYCLE_ID) 
+        VALUES  (CURRENT_TIMESTAMP, 'Bicicleta necesa revizie.', 'medium', 'notification_mentenance', 1);
+
+SELECT * FROM ISSUES WHERE TYPE_ISSUE = 'notification_mentenance';
+
+
+SELECT COUNT(*) FROM PICKUP_POINTS "pp";
+
+SELECT CURRENT_TIMESTAMP(6) - INTERVAL '1' MONTH FROM dual;
+
+COMMIT;
+
+BEGIN
+  populate_move_bicycle(100);
+  COMMIT;
+END;
+/
+
+SELECT COUNT(*) FROM MOVE_BICYCLE "mb";
+
+ROLLBACK;
+
+UPDATE BICYCLES
+  SET POINT_ID = 3
+  WHERE id = 1;
+  COMMIT;
+
+
+declare
+  v_date TIMESTAMP(6) := CURRENT_TIMESTAMP() - INTERVAL '4' MONTH;
+  v_date_start TIMESTAMP(6) := v_date - INTERVAL '1' MONTH ;
+  v_count INTEGER;
+  v_point NUMBER(38, 0) := 1;
+BEGIN
+  SELECT COUNT(*) INTO v_count FROM BICYCLES b JOIN BORROW b1 ON b.id = b1.BICYCLE_ID 
+    WHERE b1.BORROW_DATE > V_DATE_START    
+      AND b1.END_DATE < V_DATE_START + INTERVAL '1' DAY
+      AND (SELECT COUNT(*) FROM MOVE_BICYCLE mb 
+        WHERE MB.BICYCLE_ID = b1.BICYCLE_ID 
+          AND mb.FROM_POINT_ID = v_point 
+          AND (MB.MOVE_DATE > b1.END_DATE - INTERVAL '5' SECOND AND MB.MOVE_DATE < b1.END_DATE + INTERVAL '5' SECOND)) > 0;
+
+  DBMS_OUTPUT.PUT_LINE(V_COUNT);
+END;
+
+
+DECLARE
+    TYPE point_valueble IS TABLE OF NUMBER(5,2) INDEX BY BINARY_INTEGER;
+    v_tavle POINT_VALUEBLE;
+BEGIN
+      v_tavle(1) := 5;
+    IF v_tavle.EXISTS(1) THEN
+      v_tavle(1) := 10;
+      DBMS_OUTPUT.PUT_LINE(v_tavle(1));
+    END IF;
+END;
+
+
+
+

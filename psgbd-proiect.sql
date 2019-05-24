@@ -190,31 +190,63 @@ CREATE OR REPLACE PACKAGE BODY CITY_RIDE_PACKAGE AS
     END LOOP;
   END find_bicycles_maintenance;
   
-  function find_most_valueble_points(v_count integer) return bicycle_id_list IS
+  function find_most_valueble_points(v_count_return integer) return bicycle_id_list IS
     v_to_return_list bicycle_id_list := bicycle_id_list();
 
-    TYPE point_valueble IS TABLE OF NUMBER INDEX BY INTEGER;
+    TYPE type_point_valueble IS TABLE OF NUMBER(5,2) INDEX BY BINARY_INTEGER;
+    point_valueble type_point_valueble;
     cursor c_pickup_points is 
         (select id FROM PICKUP_POINTS);
     v_pickup_points c_pickup_points%ROWTYPE;
-    v_date TIMESTAMP(6) := CURRENT_TIMESTAMP(6);
+    v_date TIMESTAMP(6) := CURRENT_TIMESTAMP();
     v_date_start TIMESTAMP(6) := v_date - INTERVAL '1' MONTH ;
     v_count INTEGER;
+    v_max INTEGER;
   BEGIN
     WHILE(v_date_start < v_date) LOOP
-      FOR (v_pickup_points IN c_pickup_points) LOOP
+      FOR v_pickup_points IN c_pickup_points LOOP
         SELECT COUNT(*) INTO v_count FROM BICYCLES b JOIN BORROW b1 ON b.id = b1.BICYCLE_ID 
-          WHERE b1.BORROW_DATE < V_DATE_START AND b1.END_DATE > V_DATE_START + INTERVAL '1' DAY;
-          DBMS_OUTPUT.PUT_LINE(V_COUNT);
-      END LOOP;
-    END LOOP;
+          WHERE b1.BORROW_DATE > V_DATE_START    
+            AND b1.END_DATE < V_DATE_START + INTERVAL '1' DAY
+            AND (SELECT COUNT(*) FROM MOVE_BICYCLE mb 
+              WHERE MB.BICYCLE_ID = b1.BICYCLE_ID
+                AND mb.FROM_POINT_ID = v_pickup_points.id 
+                AND (MB.MOVE_DATE > b1.END_DATE - INTERVAL '5' SECOND AND MB.MOVE_DATE < b1.END_DATE + INTERVAL '5' SECOND)) > 0;
 
+         IF (point_valueble.exists(v_pickup_points.id)) THEN
+            point_valueble(v_pickup_points.id) := (point_valueble(v_pickup_points.id) + v_count) / 2;
+         ELSE
+            point_valueble(v_pickup_points.id) := v_count;
+         END IF;
+
+      END LOOP;
+
+      v_date_start := v_date_start + INTERVAL '1' DAY;
+    END LOOP;
+    
+    FOR i IN 1..V_COUNT_RETURN LOOP
+      -- TODO: ask someone if is possible to do something to select directly or I should change the data type
+      DBMS_OUTPUT.PUT_LINE(point_valueble.FIRST());
+    END LOOP;
+      
     RETURN v_to_return_list;
   END find_most_valueble_points;
 
   function find_overdue_borrows return borrow_id_list IS
+     cursor c_old_bicycles is 
+          (SELECT ID FROM BORROW WHERE (CURRENT_TIMESTAMP(6) - BORROW_DATE) > INTERVAL '24' HOUR AND END_DATE = null);
+    v_old_bicycles c_old_bicycles%ROWTYPE;
+
+    v_return_list borrow_id_list := borrow_id_list();
+    v_count INTEGER := 1;
   BEGIN
-    RETURN borrow_id_list();
+    FOR v_old_bicycles IN c_old_bicycles LOOP
+      v_return_list.EXTEND(1);
+      v_return_list(v_count) := v_old_bicycles.id;
+      v_count := v_count + 1;
+    END LOOP;
+
+    RETURN v_return_list;
   END find_overdue_borrows;
 
   function check_pickup_points_balance return pickup_point_id_list IS
@@ -252,14 +284,12 @@ DECLARE
 BEGIN
   --DELETE FROM issues;
   --COMMIT;
-  FIND_BICYCLES_MAINTENANCE();
+  --FIND_BICYCLES_MAINTENANCE();
+  CITY_RIDE_PACKAGE.find_overdue_borrows();
 END;
 /
 SELECT COUNT(*) FROM ISSUES "i";
 
-
-
-
-
+SELECT CITY_RIDE_PACKAGE.find_overdue_borrows() FROM dual;
 
 

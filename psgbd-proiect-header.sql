@@ -17,7 +17,7 @@ CREATE OR REPLACE PACKAGE city_ride_package as
   procedure find_old_bicycles;
   procedure find_bicycles_maintenance;
   
-  function find_most_valueble_points(v_count integer) return bicycle_id_list;
+  function find_most_valueble_points(v_count_return integer) return bicycle_id_list;
   function find_overdue_borrows return borrow_id_list;
   function check_pickup_points_balance return pickup_point_id_list;
   
@@ -33,7 +33,7 @@ CREATE OR REPLACE PACKAGE city_ride_crud_package as
   
 
 end city_ride_crud_package;
-
+/
 CREATE OR REPLACE 
 TRIGGER insert_move_bicycle
   BEFORE UPDATE OF point_id ON bicycles FOR EACH ROW
