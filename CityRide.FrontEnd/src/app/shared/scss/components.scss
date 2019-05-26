@@ -1,0 +1,57 @@
+@media screen and (min-width: 400px)
+{
+    button {
+        height: 36px;
+        font-size: $button-size;
+        
+    }
+    button:focus {
+        outline: none;
+    }
+    .button-type-1 {
+        padding: 0 20px;
+        border: none;
+        border-radius: 20px;
+        color: $purple;
+        background-color: $purple-20opacity;
+        transition: 0.1s ease-in;
+    }
+    .button-type-1:hover {
+        background-color: $purple-30opacity;
+    }
+    .button-type-2 {
+        height: auto;
+        box-sizing: initial;
+        margin-bottom: 5px;
+        color: $purple;
+        border: none;
+        text-decoration: underline;
+        text-decoration-color: $purple-20opacity;
+        text-underline-position: under;
+        background-color: $white;
+        &:hover {
+            text-decoration-color: $purple;
+        }
+    }
+
+
+    input:focus {
+        outline: none;
+    }
+    input {
+        min-width: 200px;
+        box-sizing: border-box;
+        margin: 20px 0;
+        width: 80%;
+        height: 36px;
+        padding: 5px;
+        border: 0;
+        border-bottom: 1px solid $gray002;
+        display: block;
+        transition: 0.2s ease-in;
+        &:focus {
+            border-bottom: 1px solid $gray001;
+        }
+    }
+    
+}

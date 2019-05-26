@@ -34,6 +34,11 @@ CREATE OR REPLACE PACKAGE city_ride_crud_package as
 
 end city_ride_crud_package;
 /
+CREATE OR REPLACE PACKAGE city_ride_login_package as
+  PROCEDURE create_account (FIRST_NAME VARCHAR2, LAST_NAME  VARCHAR2, EMAIL VARCHAR2, CNP varchar2, ADDRESS VARCHAR2, PASSWORD VARCHAR2, CARD_NUMBER varchar2, EXPIRATION_DATE DATE, CVV NUMBER);
+  FUNCTION login (p_email VARCHAR2, p_password VARCHAR2) RETURN NUMBER;
+end city_ride_login_package;
+/
 CREATE OR REPLACE 
 TRIGGER insert_move_bicycle
   BEFORE UPDATE OF point_id ON bicycles FOR EACH ROW

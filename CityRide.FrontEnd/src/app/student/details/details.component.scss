@@ -1,0 +1,15 @@
+.student-widget {
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 4px 3px 5px 0px rgba(102,102,102,0.26);
+}
+.student-widget h1 {
+    font-size: 20px;
+    color: #2c3e50;
+}

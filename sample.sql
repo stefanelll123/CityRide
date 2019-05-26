@@ -61,7 +61,3 @@ BEGIN
       DBMS_OUTPUT.PUT_LINE(v_tavle(1));
     END IF;
 END;
-
-
-
-
