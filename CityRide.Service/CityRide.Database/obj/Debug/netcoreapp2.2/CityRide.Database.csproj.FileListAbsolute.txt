@@ -6,4 +6,3 @@ C:\Users\turcu\Desktop\Facultate\CityRide.Service\CityRide.Database\obj\Debug\ne
 C:\Users\turcu\Desktop\Facultate\CityRide.Service\CityRide.Database\bin\Debug\netcoreapp2.2\CityRide.Database.pdb
 C:\Users\turcu\Desktop\Facultate\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.dll
 C:\Users\turcu\Desktop\Facultate\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.pdb
-C:\Users\turcu\Desktop\Facultate\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.csprojAssemblyReference.cache
