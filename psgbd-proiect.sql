@@ -316,14 +316,75 @@ CREATE OR REPLACE PACKAGE BODY city_ride_login_package AS
   BEGIN
     -- TODO: adauga criptare la parola
     SELECT COUNT(*) INTO v_count FROM USERS u WHERE u.EMAIL = p_email AND u.PASSWORD = p_password;
-    DBMS_OUTPUT.PUT_LINE(v_count);
     IF(v_count = 0) THEN
       RETURN V_ID;
     END IF;
 
-    SELECT id INTO V_ID FROM USERS u WHERE u.EMAIL = EMAIL AND u.PASSWORD = PASSWORD AND ROWNUM = 1;
+    SELECT id INTO V_ID FROM USERS u WHERE u.EMAIL = p_email AND u.PASSWORD = p_password AND ROWNUM = 1;
     RETURN V_ID;
   END login;
 end city_ride_login_package;
 /
 COMMIT;
+/
+CREATE OR REPLACE PACKAGE BODY CITY_RIDE_BORROW_PACKAGE AS
+  PROCEDURE borrow_bicycle(p_user_id NUMBER, bicycle_qr_code VARCHAR2) AS
+    v_user_count NUMBER(38,0);
+    v_current_price_id NUMBER(38,0);
+    v_bicycle_id NUMBER(38,0);
+    v_status VARCHAR2(50);
+  BEGIN
+    SELECT COUNT(*) INTO V_USER_COUNT FROM BORROW b WHERE b.user_id = p_user_id AND B.END_DATE = NULL;
+    IF(V_USER_COUNT = 0) THEN
+        SELECT ID, STATUS INTO V_BICYCLE_ID, v_status FROM BICYCLES WHERE QR_CODE = bicycle_qr_code;
+        SELECT ID INTO V_CURRENT_PRICE_ID FROM PRICES WHERE END_DATE IS NULL;
+     
+        IF(V_STATUS = 'available') THEN
+          INSERT INTO BORROW (BICYCLE_ID, USER_ID, BORROW_DATE, END_DATE, PRICE_ID) VALUES (V_BICYCLE_ID, P_USER_ID, SYSDATE, NULL, V_CURRENT_PRICE_ID);
+          UPDATE BICYCLES SET STATUS = 'borrowed' WHERE id = V_BICYCLE_ID;
+          COMMIT;
+        END IF;
+    END IF;
+  EXCEPTION WHEN OTHERS THEN
+    ROLLBACK;
+  END;
+
+  FUNCTION check_borrow_bicycle(p_user_id NUMBER, bicycle_qr_code VARCHAR2) RETURN NUMBER IS
+    v_result NUMBER(38, 0);
+    V_BICYCLE_ID NUMBER(38, 0);
+  BEGIN     
+    SELECT ID INTO V_BICYCLE_ID FROM BICYCLES WHERE QR_CODE = bicycle_qr_code;
+    SELECT COUNT(*) INTO V_RESULT FROM BORROW WHERE BICYCLE_ID = V_BICYCLE_ID AND USER_ID = p_user_id AND END_DATE is NULL;
+
+    IF(V_RESULT != 0) THEN
+      RETURN 1;
+    END IF;
+
+    RETURN 0;
+  END;
+
+  PROCEDURE return_bicycle(p_user_id NUMBER, p_point_id number) AS
+    v_borrow_id NUMBER(38, 0);
+    v_bicycle_id NUMBER(38, 0);
+  BEGIN
+    SELECT B.ID, B.BICYCLE_ID INTO V_BORROW_ID, v_bicycle_id FROM BORROW b WHERE B.USER_ID = P_USER_ID AND B.END_DATE IS NULL;
+    UPDATE BORROW SET END_DATE = SYSDATE WHERE ID = V_BORROW_ID;
+    UPDATE BICYCLES SET STATUS = 'available', POINT_ID = P_POINT_ID WHERE ID = V_BICYCLE_ID;
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+      ROLLBACK;
+  END;
+
+  FUNCTION check_return_bicycle(p_user_id number) RETURN NUMBER AS
+    v_count NUMBER;
+  BEGIN
+    SELECT COUNT(*) INTO V_COUNT FROM BORROW WHERE USER_ID = P_USER_ID AND END_DATE IS NULL;
+
+    IF(V_COUNT > 0) THEN
+      RETURN 1;
+    END IF;
+    RETURN V_COUNT;
+  END;
+END CITY_RIDE_BORROW_PACKAGE;
+
+

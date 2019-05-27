@@ -1,2 +1,3 @@
 *.design
 CityRide.Asp.Net.Service/
+CityRide.FrontEnd/node_modules/

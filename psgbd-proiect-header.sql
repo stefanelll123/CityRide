@@ -55,4 +55,11 @@ TRIGGER insert_move_bicycle
     
     INSERT INTO move_bicycle (bicycle_id, from_point_id, to_point_id, move_date) VALUES (v_bicycle_id, v_from_point_id, v_to_point_id, v_move_date);
   END insert_move_bicycle;
+/
+CREATE OR REPLACE PACKAGE CITY_RIDE_BORROW_PACKAGE AS
+  PROCEDURE borrow_bicycle(p_user_id NUMBER, bicycle_qr_code VARCHAR2);
+  FUNCTION check_borrow_bicycle(p_user_id NUMBER, bicycle_qr_code VARCHAR2) RETURN NUMBER;
+  PROCEDURE return_bicycle(p_user_id number, p_point_id number);
+  FUNCTION check_return_bicycle(p_user_id number) RETURN NUMBER;
+END CITY_RIDE_BORROW_PACKAGE;
 
