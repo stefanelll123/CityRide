@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="stylesheets/header.css">
+		<link rel="stylesheet" href="stylesheets/footer.css">
+		<link rel="stylesheet" href="stylesheets/general.css">
+		<link rel="stylesheet" href="stylesheets/home.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+        <title>KiMo</title>
+    </head>
+    <body onload="testNotification()">
+        <nav>
+            <a class="nav-profile" href="/myprofile" target="_self">
+                <i class="fas fa-user"></i>
+				<span class="badge">2</span>
+            </a>
+            <a class="nav-home" href="/" target="_self">
+                KiMo
+            </a>
+			<a class="nav-sign-out" onclick="signOut()">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+		</nav>
+		
+		<div class="container">
+            
+            <div id="map">
+            </div>
+
+            <div class="overlay d-none">
+                    <div class="pop-up-wrapper">
+                    </div>
+            </div>
+        </div>
+
+		<footer>
+			©Copyright Faculty Of Computer Science, Iasi 
+        </footer>
+        
+        <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+        <script src="javascripts/myprofile.js"></script>
+        <script src="javascripts/home.js"></script>
+    </body>
+
+</html>

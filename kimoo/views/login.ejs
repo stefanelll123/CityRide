@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KiMo</title>
+    <link rel="stylesheet" href="stylesheets/normalize.css">
+    <link rel="stylesheet" href="stylesheets/general.css">
+</head>
+<body>
+
+    <div class="view">
+        <form class="sign-up-container padded-container" id="login-form" action="/check-login" method="POST">
+            <h1 class="sign-up-title">CityRide</h1>
+            <input class="sign-up-input email-input" type="text" name="email" placeholder="Email">
+            <input class="sign-up-input password-input" type="password" name="password" placeholder="Password">
+            <button class="sign-up-button" type="submit" onclick="verifyLogin(event)">Login</button>
+            <p class="sign-up-helper-text">You don't have an account? Register now!</p>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="javascripts/login.js"></script>
+</body>
+</html>

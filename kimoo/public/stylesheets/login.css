@@ -1,0 +1,100 @@
+@media screen and (min-width: 400px) {
+    button {
+        height: 36px;
+        font-size: 16px;
+   }
+    button:focus {
+        outline: none;
+   }
+    .button-type-1 {
+        padding: 0 20px;
+        border: none;
+        border-radius: 20px;
+        color: #7540ee;
+        background-color: rgba(117, 64, 238, 0.2);
+        transition: 0.1s ease-in;
+   }
+    .button-type-1:hover {
+        background-color: rgba(117, 64, 238, 0.3);
+   }
+    .button-type-2 {
+        height: auto;
+        box-sizing: initial;
+        margin-bottom: 5px;
+        color: #7540ee;
+        border: none;
+        text-decoration: underline;
+        text-decoration-color: rgba(117, 64, 238, 0.2);
+        text-underline-position: under;
+        background-color: #fff;
+   }
+    .button-type-2:hover {
+        text-decoration-color: #7540ee;
+   }
+    input:focus {
+        outline: none;
+   }
+    input {
+        min-width: 200px;
+        box-sizing: border-box;
+        margin: 20px 0;
+        width: 80%;
+        height: 36px;
+        padding: 5px;
+        border: 0;
+        border-bottom: 1px solid #dfdfe4;
+        display: block;
+        transition: 0.2s ease-in;
+   }
+    input:focus {
+        border-bottom: 1px solid #787993;
+   }
+}
+@media screen and (min-width: 400px) {
+    .center {
+        height: 80vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+   }
+    .login-component {
+        width: 300px;
+   }
+    .login-component h1 {
+        font-size: 24px;
+        color: #25265e;
+        margin-bottom: 10px;
+   }
+    .login-component .nice-message {
+        color: #787993;
+        font-size: 16px;
+   }
+    .login-component .inputs {
+        margin: 40px 0;
+   }
+    .login-component input {
+        width: 100%;
+   }
+    .login-component .buttons {
+        display: flex;
+        justify-content: space-between;
+   }
+    .login-component footer {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+   }
+    .login-component footer * {
+        display: inline;
+   }
+    .login-component footer p {
+        font-size: 16px;
+        color: #787993;
+   }
+    .login-component footer button.create-account {
+        padding-top: 7px;
+        color: #ff7052;
+        text-decoration-color: rgba(255, 112, 82, 0.2);
+   }
+}

@@ -1,0 +1,14 @@
+footer {
+	text-align: center;
+	padding: 0.5em 0em;
+	background-color: #E8F1F2;
+	background-image: linear-gradient(#E8F1F2, #f9f9f9);
+	width: 100%;
+	font-family: 'Roboto Slab', serif;
+	font-size: 0.85em;
+	font-weight: 500;
+	color: rgb(19, 34, 48);
+	margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}

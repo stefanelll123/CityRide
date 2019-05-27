@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KiMo</title>
+    <link rel="stylesheet" href="stylesheets/authentication.css">
+    <link rel="stylesheet" href="stylesheets/general.css">
+</head>
+<body>
+
+    <div class="authentication-container">
+        
+        <h1 class="authentication-logo">
+            Kids Monitoring
+        </h1>
+
+        <form 
+            action="/" 
+            method="post"
+            id="userRegisterForm"
+            class="authentication-form">
+
+            <input 
+                type="text" 
+                name="userName"
+                id="userName"
+                class="authentication-input"
+                placeholder="nume"/>
+
+            <input 
+                type="email" 
+                name="userEmail"
+                id="userEmail"
+                class="authentication-input"
+                placeholder="email"/>
+
+            <input 
+                type="password" 
+                name="userPassword"
+                id="userPassword"
+                class="authentication-input"
+                placeholder="parolă">
+
+            <input 
+                type="password" 
+                name="userRePassword"
+                id="userRePassword"
+                class="authentication-input"
+                placeholder="parolă">
+
+
+            <button type="submit" class="authentication-button">
+                Register
+            </button>
+
+        </form>
+
+        <a href="logIn.html" 
+            target="_self"
+            class="authentication-redirectLink">
+            Log in
+        </a>
+
+    </div>
+
+</body>
+</html>

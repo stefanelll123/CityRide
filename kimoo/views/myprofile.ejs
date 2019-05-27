@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="stylesheets/header.css">
+		<link rel="stylesheet" href="stylesheets/footer.css">
+		<link rel="stylesheet" href="stylesheets/general.css">
+		<link rel="stylesheet" href="stylesheets/personalpage.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+		<title>KiMo</title>
+    </head>
+    <body>
+        <nav>
+            <a class="nav-profile" href="/myprofile" target="_self">
+                <i class="fas fa-user"></i>
+				<span class="badge">2</span>
+            </a>
+            <a class="nav-home" href="/" target="_self">
+                KiMo
+            </a>
+			<a class="nav-sign-out" onclick="signOut()">
+				<i class="fas fa-sign-out-alt"></i>
+			</a>
+		</nav>
+		
+		<div class="container">
+			<div class="personal-page-wrapper">
+				<div class="children-list">
+					<div class="children-title">
+						Listă copii
+					</div>
+					<div class="children">
+						<div class="child" id="1" onclick="showNotifications()">
+							<img class="profile-picture" src="https://www.sheffield.ac.uk/polopoly_fs/1.739455!/image/A_Cochrane_300x300.jpg" alt="">
+							<p> Andrei </p>
+							<i class="fas fa-cog profile-settings"></i>
+						</div>
+						<div class="child" id="2">
+							<img class="profile-picture" src="https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg" alt="">
+							<p>Raluca-Ana Maria</p>
+							<i class="fas fa-cog profile-settings"></i>
+						</div>
+						<div class="child" id="3">
+							<img class="profile-picture" src="https://coopersfarm.com/wp-content/uploads/2016/02/sheryl-sandberg-could-become-one-of-the-wealthiest-self-made-women-in-the-world.jpg" alt="">
+							<p>Ion</p>
+							<i class="fas fa-cog profile-settings"></i>
+						</div>
+						<div class="child" id="4">
+							<img class="profile-picture" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREHFNZUdbIh6EXT9rXe1Nzw2aurJnPFa9djikdda_MTwosPhiq" alt="">
+							<p>Viorel</p>
+							<i class="fas fa-cog profile-settings"></i>
+						</div>
+						<div class="child" id="5">
+							<img class="profile-picture" src="https://sguru.org/wp-content/uploads/2017/06/girls-stylish-facebookdp-2016-www.fashionfreak4u.blogspot.com-11-.jpg" alt="">
+							<p>Maria</p>
+							<i class="fas fa-cog profile-settings"></i>
+						</div>
+					</div>
+					<button class="primary" onclick="addChild()">
+						+
+					</button>
+				</div>
+				<div class="notifications" id="notifications">
+					<div class="notifications-title">
+						Notificări
+					</div>
+					<div class="notification-wrapper">
+						<div class="notification-list">
+							<div class="empty">
+								<div class="empty-notification">
+									<i class="fas fa-list empty-list"></i>
+								</div>
+								<div class="notification empty-message">
+									<p>
+										Selectați un copil din listă pentru a vedea ultimele notificări!
+									</p>
+								</div>
+							</div>
+							<div class="normal-list d-none">
+								<div class="notification">
+									<p class="date">16/03/2019 10:33</p>
+									<p>
+										Copilul dumneavoastră s-a lovit!
+									</p>
+								</div>
+								<div class="notification">
+									<p class="date">13/03/2019 17:40</p>
+									<p>
+										Copilul dumneavoastră a ieșit în afara ariei prestabilite!
+									</p>
+								</div>
+								<div class="notification">
+									<p class="date" data-seen="true">13/03/2019 17:40</p>
+									<p>
+										Copilul dumneavoastră a interacționat cu un câine periculos!
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="overlay d-none">
+			<div class="pop-up-wrapper">
+			</div>
+		</div>
+		<footer>
+			©Copyright Faculty Of Computer Science, Iași 
+		</footer>
+
+		<script src="javascripts/myprofile.js"></script>
+    </body>
+</html>
