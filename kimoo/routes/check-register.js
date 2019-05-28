@@ -9,7 +9,7 @@ router.post('/', function(req, res, next) {
         rejectUnauthorized: false,
         host: 'localhost',
         port: 5001,
-        path: '/api/authentification/login',
+        path: '/api/authentification/register',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -18,24 +18,14 @@ router.post('/', function(req, res, next) {
 
     var reqGet = https.request(optionsget, function(response) {
         if (response.statusCode >= 400 && response.statusCode < 500) {
-            res.json({
+            return res.json({
                 value: -1
             });
+        } else if (response.statusCode >= 200 && response.statusCode < 300) {
+            return res.json({
+                value: 1
+            });
         }
-
-        response.on('data', function(d) {
-            var data = JSON.parse(d);
-
-            if (data.value != -1) {
-                res.json({
-                    value: data.value
-                });
-            } else {
-                res.json({
-                    value: -1
-                });
-            }
-        });
     });
 
     reqGet.write(content);

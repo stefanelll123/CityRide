@@ -3,66 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>KiMo</title>
-    <link rel="stylesheet" href="stylesheets/authentication.css">
+    <title>Register</title>
+    <link rel="stylesheet" href="stylesheets/normalize.css">
     <link rel="stylesheet" href="stylesheets/general.css">
 </head>
 <body>
-
-    <div class="authentication-container">
-        
-        <h1 class="authentication-logo">
-            Kids Monitoring
-        </h1>
-
-        <form 
-            action="/" 
-            method="post"
-            id="userRegisterForm"
-            class="authentication-form">
-
-            <input 
-                type="text" 
-                name="userName"
-                id="userName"
-                class="authentication-input"
-                placeholder="nume"/>
-
-            <input 
-                type="email" 
-                name="userEmail"
-                id="userEmail"
-                class="authentication-input"
-                placeholder="email"/>
-
-            <input 
-                type="password" 
-                name="userPassword"
-                id="userPassword"
-                class="authentication-input"
-                placeholder="parolă">
-
-            <input 
-                type="password" 
-                name="userRePassword"
-                id="userRePassword"
-                class="authentication-input"
-                placeholder="parolă">
-
-
-            <button type="submit" class="authentication-button">
-                Register
-            </button>
-
+    <div class="view">
+        <form class="sign-up-container padded-container" id="register-form" action="/register" method="POST">
+            <h1 class="sign-up-title">CityRide</h1>
+            <input class="sign-up-input first-input" type="text" name="first_name" placeholder="First Name">
+            <input class="sign-up-input last-input" type="text" name="last_name" placeholder="Last Name">
+            <input class="sign-up-input email-input" type="email" name="email" placeholder="Email">
+            <input class="sign-up-input cnp-input" type="text" name="cnp" placeholder="CNP">
+            <input class="sign-up-input address-input" type="text" name="address" placeholder="Address">
+            <input class="sign-up-input password-input" type="password" name="password" placeholder="Password">
+            <input class="sign-up-input card-input" type="text" name="card_number" placeholder="Card Number">
+            <input class="sign-up-input expiration-input" type="date" name="expiration_date" placeholder="Expiration Date">
+            <input class="sign-up-input cvv-input" type="text" name="cvv" placeholder="CVV">
+            <span class="error-message d-none">Error</span>
+            <button class="sign-up-button register-button" type="submit">Register</button>
         </form>
-
-        <a href="logIn.html" 
-            target="_self"
-            class="authentication-redirectLink">
-            Log in
-        </a>
-
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="javascripts/register.js"></script>
 </body>
 </html>
