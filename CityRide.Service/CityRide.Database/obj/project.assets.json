@@ -1894,11 +1894,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\turcu\\Desktop\\Facultate\\CityRide.Service\\CityRide.Database\\CityRide.Database.csproj",
+      "projectUniqueName": "C:\\Users\\turcu\\Desktop\\Facultate\\PSGBD\\proiect\\CityRide\\CityRide.Service\\CityRide.Database\\CityRide.Database.csproj",
       "projectName": "CityRide.Database",
-      "projectPath": "C:\\Users\\turcu\\Desktop\\Facultate\\CityRide.Service\\CityRide.Database\\CityRide.Database.csproj",
+      "projectPath": "C:\\Users\\turcu\\Desktop\\Facultate\\PSGBD\\proiect\\CityRide\\CityRide.Service\\CityRide.Database\\CityRide.Database.csproj",
       "packagesPath": "C:\\Users\\turcu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\turcu\\Desktop\\Facultate\\CityRide.Service\\CityRide.Database\\obj\\",
+      "outputPath": "C:\\Users\\turcu\\Desktop\\Facultate\\PSGBD\\proiect\\CityRide\\CityRide.Service\\CityRide.Database\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

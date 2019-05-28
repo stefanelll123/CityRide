@@ -12275,11 +12275,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\turcu\\Desktop\\Facultate\\CityRide.Service\\CityRide.Service\\CityRide.WebAPi.csproj",
+      "projectUniqueName": "C:\\Users\\turcu\\Desktop\\Facultate\\PSGBD\\proiect\\CityRide\\CityRide.Service\\CityRide.Service\\CityRide.WebAPi.csproj",
       "projectName": "CityRide.WebAPi",
-      "projectPath": "C:\\Users\\turcu\\Desktop\\Facultate\\CityRide.Service\\CityRide.Service\\CityRide.WebAPi.csproj",
+      "projectPath": "C:\\Users\\turcu\\Desktop\\Facultate\\PSGBD\\proiect\\CityRide\\CityRide.Service\\CityRide.Service\\CityRide.WebAPi.csproj",
       "packagesPath": "C:\\Users\\turcu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\turcu\\Desktop\\Facultate\\CityRide.Service\\CityRide.Service\\obj\\",
+      "outputPath": "C:\\Users\\turcu\\Desktop\\Facultate\\PSGBD\\proiect\\CityRide\\CityRide.Service\\CityRide.Service\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12298,8 +12298,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\turcu\\Desktop\\Facultate\\CityRide.Service\\CityRide.Database\\CityRide.Database.csproj": {
-              "projectPath": "C:\\Users\\turcu\\Desktop\\Facultate\\CityRide.Service\\CityRide.Database\\CityRide.Database.csproj"
+            "C:\\Users\\turcu\\Desktop\\Facultate\\PSGBD\\proiect\\CityRide\\CityRide.Service\\CityRide.Database\\CityRide.Database.csproj": {
+              "projectPath": "C:\\Users\\turcu\\Desktop\\Facultate\\PSGBD\\proiect\\CityRide\\CityRide.Service\\CityRide.Database\\CityRide.Database.csproj"
             }
           }
         }

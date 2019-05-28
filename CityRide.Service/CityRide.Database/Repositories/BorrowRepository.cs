@@ -41,7 +41,7 @@ namespace CityRide.Database.Repositories
 
             var result = Connection.QueryFirst<bool>($"select CITY_RIDE_BORROW_PACKAGE.check_return_bicycle({returnModel.UserId}) from dual");
 
-            return result;
+            return !result;
         }
     }
 }
