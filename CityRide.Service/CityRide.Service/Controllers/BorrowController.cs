@@ -52,5 +52,14 @@ namespace CityRide.WebAPi.Controllers
 
             return StatusCode(201);
         }
+
+        [Route("price")]
+        [HttpGet]
+        public IActionResult GetBicycleBorrowPrice(int userId)
+        {
+            var price = _borrowRepository.GetBorrowPrice(userId);
+
+            return Ok(price);
+        }
     }
 }
