@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CityRide.Database.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -126,6 +127,15 @@ namespace CityRide.WebAPi.Controllers
         public IActionResult GetUserBorrowHistory(int userId)
         {
             var result = _statisticRepository.GetUserBorrowHistory(userId);
+            
+            return Ok(result);
+        }
+
+        [Route("prices/history")]
+        [HttpGet]
+        public IActionResult GetPricesHistory(DateTime startDate, DateTime endDate)
+        {
+            var result = _statisticRepository.GetPriceHistory(startDate, endDate);
             
             return Ok(result);
         }

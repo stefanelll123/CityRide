@@ -152,5 +152,21 @@ namespace CityRide.Database.Repositories
 
             return issueList;
         }
+
+        public ICollection<PriceHistoryModel> GetPriceHistory(DateTime startDate, DateTime endDate)
+        {
+            var pricesList = new List<PriceHistoryModel>();
+            try
+            {
+                pricesList =
+                    Connection.Query<PriceHistoryModel>($"SELECT * from prices where start_date > TO_DATE(\'{startDate.ToString("yyyy/MM/dd")}\', 'yyyy/mm/dd') and end_date < TO_DATE(\'{endDate.ToString("yyyy/MM/dd")}\', 'yyyy/mm/dd')").ToList();
+            }
+            catch(Exception exception)
+            {
+                return pricesList;
+            }
+
+            return pricesList;
+        }
     }
 }
