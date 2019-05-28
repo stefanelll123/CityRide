@@ -431,6 +431,21 @@ BEGIN
 
   RETURN v_return_list;
 END find_overdue_borrows;
+/
+  CREATE OR REPLACE function get_bicycle_problems_reported(p_bicycle_id number) return issues_list IS
+     v_issues_list issues_list := issues_list();
+     cursor c_issues_list IS 
+        (SELECT ID FROM ISSUES WHERE bicycle_id = p_bicycle_id);
+      v_issue_id C_ISSUES_LIST%ROWTYPE;
+      v_index NUMBER(38,0) := 1;
+  BEGIN
+    FOR v_issue_id IN c_issues_list LOOP
+      V_ISSUES_LIST.EXTEND(1);
+      v_issues_list(v_index) := v_issue_id.id;
+      v_index := v_index + 1;
+    END LOOP;
 
+    RETURN v_issues_list;
+  END get_bicycle_problems_reported;
 
 

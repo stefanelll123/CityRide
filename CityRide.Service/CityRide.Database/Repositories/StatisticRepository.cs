@@ -112,5 +112,29 @@ namespace CityRide.Database.Repositories
 
             return overdueList;
         }
+
+        public ICollection<IssueModel> GetBicyclesIssues(int bicycleId)
+        {
+            var issueList = new List<IssueModel>();
+            try
+            {
+                var issues =
+                    Connection.Query<int>($"SELECT * FROM TABLE(get_bicycle_problems_reported({bicycleId}))");
+
+                foreach (var id in issues)
+                {
+                    var result = Connection.QueryFirst<IssueModel>(
+                        $"select * from issues where id = {id}");
+
+                    issueList.Add(result);
+                }
+            }
+            catch
+            {
+                return issueList;
+            }
+
+            return issueList;
+        }
     }
 }

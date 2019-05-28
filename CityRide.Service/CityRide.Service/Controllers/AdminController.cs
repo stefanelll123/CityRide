@@ -1,4 +1,5 @@
-﻿using CityRide.Database.Repositories;
+﻿using System.Linq;
+using CityRide.Database.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CityRide.WebAPi.Controllers
@@ -37,7 +38,7 @@ namespace CityRide.WebAPi.Controllers
         {
             var result = _statisticRepository.GetAllBicycleByStatus("broken");
 
-            return Ok(result);
+            return Ok(result.Take(1000));
         }
 
         [Route("bicycles/available")]
@@ -46,7 +47,7 @@ namespace CityRide.WebAPi.Controllers
         {
             var result = _statisticRepository.GetAllBicycleByStatus("available");
 
-            return Ok(result);
+            return Ok(result.Take(1000));
         }
 
         [Route("bicycles/borrowed")]
@@ -55,7 +56,7 @@ namespace CityRide.WebAPi.Controllers
         {
             var result = _statisticRepository.GetAllBicycleByStatus("borrowed");
 
-            return Ok(result);
+            return Ok(result.Take(1000));
         }
 
         [Route("bicycles/load_old")]
@@ -107,6 +108,15 @@ namespace CityRide.WebAPi.Controllers
         public IActionResult GetOverdueBicycles()
         {
             var result = _statisticRepository.GetOverdueBicyclesIssues();
+            
+            return Ok(result);
+        }
+
+        [Route("bicycles/issues")]
+        [HttpGet]
+        public IActionResult GetOverdueBicycles(int bicycleId)
+        {
+            var result = _statisticRepository.GetBicyclesIssues(bicycleId);
             
             return Ok(result);
         }
