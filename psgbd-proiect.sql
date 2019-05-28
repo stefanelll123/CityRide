@@ -190,6 +190,7 @@ CREATE OR REPLACE PACKAGE BODY CITY_RIDE_PACKAGE AS
     END LOOP;
   END find_bicycles_maintenance;
   
+  -- TODO: not done, yet
   function find_most_valueble_points(v_count_return integer) return bicycle_id_list IS
     v_to_return_list bicycle_id_list := bicycle_id_list();
 
@@ -255,18 +256,32 @@ CREATE OR REPLACE PACKAGE BODY CITY_RIDE_PACKAGE AS
   END check_pickup_points_balance;
   
   function calculates_paid(borrow_id borrow.id%type) return number IS
+    v_number_of_hours NUMBER(5,0);
+    v_price NUMBER(5,0);
   BEGIN
-    RETURN 1;
-  END calculates_paid;
+    SELECT to_number(EXTRACT(DAY FROM 24 * (SYSDATE - borrow_date))) INTO V_NUMBER_OF_HOURS FROM BORROW WHERE id = BORROW_ID;
+    SELECT p.value INTO v_price FROM BORROW b JOIN PRICES p ON p.id = b.PRICE_ID WHERE ROWNUM = 1;
+    IF(V_NUMBER_OF_HOURS < 3) THEN 
+      RETURN 3 * V_PRICE;
+    END IF;
 
-  function check_if_can_be_borrow(bicycle_id bicycles.id%type) return boolean IS
-  BEGIN
-    RETURN true;
-  END check_if_can_be_borrow;
+    RETURN V_NUMBER_OF_HOURS * V_PRICE;
+  END calculates_paid;
   
-  function get_bicycle_problems_reported(user_id users.id%type, bicycle_id bicycles.id%type) return issues_list IS
+  function get_bicycle_problems_reported(p_bicycle_id number) return issues_list IS
+     v_issues_list issues_list := issues_list();
+     cursor c_issues_list IS 
+        (SELECT ID FROM ISSUES WHERE bicycle_id = p_bicycle_id);
+      v_issue_id C_ISSUES_LIST%ROWTYPE;
+      v_index NUMBER(38,0) := 1;
   BEGIN
-    RETURN issues_list();
+    FOR v_issue_id IN c_issues_list LOOP
+      V_ISSUES_LIST.EXTEND(1);
+      v_issues_list(v_index) := v_issue_id.id;
+      v_index := v_index + 1;
+    END LOOP;
+
+    RETURN v_issues_list;
   END get_bicycle_problems_reported;
 
   function get_user_borrow_history(user_id users.id%type, start_date date, end_date date) return user_borrow_history_list IS
@@ -386,5 +401,16 @@ CREATE OR REPLACE PACKAGE BODY CITY_RIDE_BORROW_PACKAGE AS
     RETURN V_COUNT;
   END;
 END CITY_RIDE_BORROW_PACKAGE;
+/
 
+CREATE OR REPLACE PACKAGE BODY city_ride_crud_package as
+  FUNCTION get_bicycle(p_user_id NUMBER) RETURN BICYCLES%ROWTYPE AS
+    v_bicycle_id NUMBER(38,0);
+    v_bicycle_information BICYCLES%ROWTYPE;
+  BEGIN
+    SELECT bicycle_id INTO V_BICYCLE_ID FROM BORROW WHERE USER_ID = P_USER_ID;
+    SELECT * INTO V_BICYCLE_INFORMATION FROM BICYCLES WHERE id = V_BICYCLE_ID;
 
+    RETURN V_BICYCLE_INFORMATION;
+  END get_bicycle;
+end city_ride_crud_package;

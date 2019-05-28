@@ -27,6 +27,13 @@ namespace CityRide.Database.Repositories
             return result;
         }
 
+        public bool BicycleExists(int userId)
+        {
+            var exists = Connection.QueryFirst<bool>($"select count(*) from borrow where user_id = {userId} and end_date is null");
+
+            return exists;
+        }
+
         public bool ReturnBicycle(ReturnModel returnModel)
         {
             var query = $"BEGIN CITY_RIDE_BORROW_PACKAGE.return_bicycle({returnModel.UserId}, {returnModel.PointId}); END;";

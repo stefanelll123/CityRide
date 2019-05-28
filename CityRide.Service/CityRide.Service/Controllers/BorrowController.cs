@@ -27,6 +27,19 @@ namespace CityRide.WebAPi.Controllers
             return StatusCode(201);
         }
 
+        
+        [HttpGet]
+        public IActionResult BicycleExists(int userId)
+        {
+            var exists = _borrowRepository.BicycleExists(userId);
+            if (exists)
+            {
+                return StatusCode(200);
+            }
+
+            return NotFound();
+        }
+
         [Route("return")]
         [HttpPost]
         public IActionResult ReturnBicycle([FromBody] ReturnModel returnModel)

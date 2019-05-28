@@ -1,8 +1,10 @@
+
+  CREATE OR REPLACE TYPE issues_list IS table OF number;
+
 CREATE OR REPLACE PACKAGE city_ride_package as
   TYPE bicycle_id_list IS table OF bicycles.id%type;
   TYPE borrow_id_list IS table OF borrow.id%type;  
   TYPE pickup_point_id_list IS table OF pickup_points.id%type;
-  TYPE issues_list IS table OF issues.id%type;
   
   TYPE price_history IS RECORD (p_value number, p_date date);
   TYPE price_history_list IS TABLE OF price_history;
@@ -22,16 +24,13 @@ CREATE OR REPLACE PACKAGE city_ride_package as
   function check_pickup_points_balance return pickup_point_id_list;
   
   function calculates_paid(borrow_id borrow.id%type) return number;
-  function check_if_can_be_borrow(bicycle_id bicycles.id%type) return boolean;
   
-  function get_bicycle_problems_reported(user_id users.id%type, bicycle_id bicycles.id%type) return issues_list;
+  function get_bicycle_problems_reported(p_bicycle_id number) return issues_list;
   function get_user_borrow_history(user_id users.id%type, start_date date, end_date date) return user_borrow_history_list;
   function get_price_history(start_date date, end_date date) return price_history_list;
 end city_ride_package;
 /
 CREATE OR REPLACE PACKAGE city_ride_crud_package as
-  
-
 end city_ride_crud_package;
 /
 CREATE OR REPLACE PACKAGE city_ride_login_package as
