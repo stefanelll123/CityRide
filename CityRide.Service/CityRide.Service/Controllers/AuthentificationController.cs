@@ -23,6 +23,15 @@ namespace CityRide.WebAPi.Controllers
             return Ok(users);
         }
 
+        [Route("users/role")]
+        [HttpGet]
+        public IActionResult GetUserRole(int userId)
+        {
+            var users = _usereRepository.GetUserRole(userId);
+
+            return Ok(users);
+        }
+
         [Route("register")]
         [HttpPost]
         public IActionResult CreateUser([FromBody] UserCreateModel userCreateModel)

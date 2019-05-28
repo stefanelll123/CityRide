@@ -18,6 +18,13 @@ namespace CityRide.Database.Repositories
             return wozConfs.ToList().FirstOrDefault();
         }
 
+        public string GetUserRole(int userId)
+        {
+            var result = Connection.QueryFirst<string>($"SELECT role FROM USERS WHERE id = {userId}");
+
+            return result;
+        }
+
         public bool CreateUser(UserCreateModel user)
         {
             var alreadyExists = Connection.QueryFirst<bool>($"SELECT count(*) FROM USERS WHERE EMAIL = \'{user.Email}\'");
