@@ -6,9 +6,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var register = require('./routes/register');
+var checkRegister = require('./routes/check-register');
 var login = require('./routes/login');
 var myprofile = require('./routes/myprofile');
 var sensor = require('./routes/sensor');
+var borrow = require('./routes/borrow');
 var checkLogin = require('./routes/check-login');
 
 var app = express();
@@ -29,6 +31,8 @@ app.use('/login', login);
 app.use('/myprofile', myprofile);
 app.use('/sensor', sensor);
 app.use('/check-login', checkLogin);
+app.use('/check-register', checkRegister);
+app.use('/borrow', borrow);
 
 
 // catch 404 and forward to error handler
