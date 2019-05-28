@@ -57,5 +57,58 @@ namespace CityRide.WebAPi.Controllers
 
             return Ok(result);
         }
+
+        [Route("bicycles/load_old")]
+        [HttpPost]
+        public IActionResult FindOldBicycles()
+        {
+            var result = _statisticRepository.FindOldBicycles();
+            if (result)
+            {
+                return StatusCode(200);
+            }
+
+            return NotFound();
+        }
+
+        [Route("bicycles/load_old")]
+        [HttpGet]
+        public IActionResult GetOldBicycles()
+        {
+            var result = _statisticRepository.GetOldBicyclesIssues();
+            
+            return Ok(result);
+        }
+
+        [Route("bicycles/load_maintainance")]
+        [HttpPost]
+        public IActionResult FindMaintainanceBicycles()
+        {
+            var result = _statisticRepository.FindMaintananceBicycles();
+            if (result)
+            {
+                return StatusCode(200);
+            }
+
+            return NotFound();
+        }
+
+        [Route("bicycles/load_maintainance")]
+        [HttpGet]
+        public IActionResult GetMaintainanceBicycles()
+        {
+            var result = _statisticRepository.GetMaintananceBicyclesIssues();
+            
+            return Ok(result);
+        }
+
+        [Route("bicycles/overdue")]
+        [HttpGet]
+        public IActionResult GetOverdueBicycles()
+        {
+            var result = _statisticRepository.GetOverdueBicyclesIssues();
+            
+            return Ok(result);
+        }
     }
 }

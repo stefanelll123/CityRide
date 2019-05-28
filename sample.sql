@@ -180,6 +180,13 @@ SELECT * FROM TABLE(CITY_RIDE_PACKAGE.get_bicycle_problems_reported(1));
 SELECT CITY_RIDE_PACKAGE.get_bicycle_problems_reported(1) FROM dual;
 
 
+exec CITY_RIDE_BORROW_PACKAGE.return_bicycle(7, 75);
+SELECT CITY_RIDE_BORROW_PACKAGE.check_return_bicycle(7) FROM dual;
+
+select CITY_RIDE_BORROW_PACKAGE.check_return_bicycle(208) from dual
+
+
+SELECT * FROM TABLE(find_overdue_borrows);
 
 
 

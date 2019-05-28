@@ -235,7 +235,7 @@ CREATE OR REPLACE PACKAGE BODY CITY_RIDE_PACKAGE AS
 
   function find_overdue_borrows return borrow_id_list IS
      cursor c_old_bicycles is 
-          (SELECT ID FROM BORROW WHERE (CURRENT_TIMESTAMP(6) - BORROW_DATE) > INTERVAL '24' HOUR AND END_DATE = null);
+          (SELECT ID FROM BORROW WHERE (CURRENT_TIMESTAMP(6) - BORROW_DATE) > INTERVAL '24' HOUR AND END_DATE like null);
     v_old_bicycles c_old_bicycles%ROWTYPE;
 
     v_return_list borrow_id_list := borrow_id_list();
@@ -414,3 +414,23 @@ CREATE OR REPLACE PACKAGE BODY city_ride_crud_package as
     RETURN V_BICYCLE_INFORMATION;
   END get_bicycle;
 end city_ride_crud_package;
+/
+CREATE OR REPLACE function find_overdue_borrows return borrow_id_list IS
+   cursor c_old_bicycles is 
+        (SELECT ID FROM BORROW WHERE (CURRENT_TIMESTAMP(6) - BORROW_DATE) > INTERVAL '24' HOUR AND END_DATE is null);
+  v_old_bicycles c_old_bicycles%ROWTYPE;
+
+  v_return_list borrow_id_list := borrow_id_list();
+  v_count INTEGER := 1;
+BEGIN
+  FOR v_old_bicycles IN c_old_bicycles LOOP
+    v_return_list.EXTEND(1);
+    v_return_list(v_count) := v_old_bicycles.id;
+    v_count := v_count + 1;
+  END LOOP;
+
+  RETURN v_return_list;
+END find_overdue_borrows;
+
+
+

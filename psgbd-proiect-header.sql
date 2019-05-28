@@ -1,6 +1,9 @@
 
   CREATE OR REPLACE TYPE issues_list IS table OF number;
 
+
+  CREATE OR REPLACE TYPE borrow_id_list IS table OF NUMBER;  
+
 CREATE OR REPLACE PACKAGE city_ride_package as
   TYPE bicycle_id_list IS table OF bicycles.id%type;
   TYPE borrow_id_list IS table OF borrow.id%type;  
