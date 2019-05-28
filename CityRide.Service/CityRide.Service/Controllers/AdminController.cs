@@ -120,5 +120,14 @@ namespace CityRide.WebAPi.Controllers
             
             return Ok(result);
         }
+
+        [Route("user/borrow_history")]
+        [HttpGet]
+        public IActionResult GetUserBorrowHistory(int userId)
+        {
+            var result = _statisticRepository.GetUserBorrowHistory(userId);
+            
+            return Ok(result);
+        }
     }
 }

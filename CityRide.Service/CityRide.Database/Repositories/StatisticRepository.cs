@@ -136,5 +136,21 @@ namespace CityRide.Database.Repositories
 
             return issueList;
         }
+
+        public ICollection<BorrowHistoryModel> GetUserBorrowHistory(int userId)
+        {
+            var issueList = new List<BorrowHistoryModel>();
+            try
+            {
+                issueList =
+                    Connection.Query<BorrowHistoryModel>($"SELECT b.*, p.value || \' pe ora\' as price from borrow b join prices p on b.price_id = p.id where b.user_id = {userId} order by b.end_date").ToList();
+            }
+            catch
+            {
+                return issueList;
+            }
+
+            return issueList;
+        }
     }
 }
