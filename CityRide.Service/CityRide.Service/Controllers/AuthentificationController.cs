@@ -14,10 +14,20 @@ namespace CityRide.WebAPi.Controllers
             _usereRepository = new UserRepository();
         }
 
+        [Route("users")]
         [HttpGet]
-        public IActionResult Test()
+        public IActionResult GetUser(int userId)
         {
-            var users =_usereRepository.GetUser(1);
+            var users =_usereRepository.GetUser(userId);
+
+            return Ok(users);
+        }
+
+        [Route("users/role")]
+        [HttpGet]
+        public IActionResult GetUserRole(int userId)
+        {
+            var users = _usereRepository.GetUserRole(userId);
 
             return Ok(users);
         }

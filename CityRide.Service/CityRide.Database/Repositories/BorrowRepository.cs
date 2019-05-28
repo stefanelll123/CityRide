@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CityRide.Database.Models;
 using Dapper;
 
@@ -32,6 +33,23 @@ namespace CityRide.Database.Repositories
             var exists = Connection.QueryFirst<bool>($"select count(*) from borrow where user_id = {userId} and end_date is null");
 
             return exists;
+        }
+
+        public int GetBorrowPrice(int userId)
+        {
+            try
+            {
+                var borrowId =
+                    Connection.QueryFirst<int>(
+                        $"select id from borrow where user_id = {userId} and end_date is null and rownum = 1");
+                var price = Connection.QueryFirst<int>($"select city_ride_package.calculates_paid({borrowId}) from dual");
+
+                return price;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
         }
 
         public bool ReturnBicycle(ReturnModel returnModel)

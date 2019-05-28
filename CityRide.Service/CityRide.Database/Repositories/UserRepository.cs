@@ -13,11 +13,16 @@ namespace CityRide.Database.Repositories
 
         public UserModel GetUser(int userId)
         {
-            // var wozConfs = Connection.Query<string>("BEGIN return_text(); END;", CommandType.StoredProcedure);
-            //var wozConfs = Connection.Query<string>("select city_ride_package.get_next_id('USERS') from dual");
             var wozConfs = Connection.Query<UserModel>($"SELECT * FROM USERS WHERE id = {userId}");
 
             return wozConfs.ToList().FirstOrDefault();
+        }
+
+        public string GetUserRole(int userId)
+        {
+            var result = Connection.QueryFirst<string>($"SELECT role FROM USERS WHERE id = {userId}");
+
+            return result;
         }
 
         public bool CreateUser(UserCreateModel user)
