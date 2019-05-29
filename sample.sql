@@ -187,6 +187,42 @@ select CITY_RIDE_BORROW_PACKAGE.check_return_bicycle(208) from dual
 
 
 SELECT * FROM TABLE(find_overdue_borrows);
+SELECT * FROM TABLE(get_bicycle_problems_reported(10));
 
 
+SELECT * FROM (SELECT * from Valueable_pickup_points ORDER BY value DESC) WHERE ROWNUM < 5;
+
+
+
+CREATE OR REPLACE PROCEDURE demo AS
+  l_cursor  INTEGER;
+l_dummy   NUMBER;
+timestart NUMBER;
+v_import NUMBER;
+BEGIN
+dbms_output.enable;
+ timestart := dbms_utility.get_time();
+  v_import := CITY_RIDE_BORROW_PACKAGE.check_borrow_bicycle(6129, 'GWJHW5LGOPLXCP6Y1BR125W2RC3DRYM9RMHEMC3UM4H9YM3HW4R5MLJ78NVN38QFB2CZ2ASNG8A0RZKNGVJDK6HZ9C1PKU9Y7T80WV5CD26EL3VOIE0NE8FLFDOM52LN2J1NVP0TXPR59COSR2DY2PJN7XN1XR0FL71GTVHG4SSNL3D7G1L7R5B9HOPTH08JXTM2868V');
+ dbms_output.put_line(dbms_utility.get_time() - timestart);
+END;
+
+
+-- index speed
+CREATE INDEX IX_Issue_BICYCLE_id ON issues (bicycle_id);
+DROP INDEX IX_Issue_BICYCLE_id;
+COMMIT;
+SELECT qr_code FROM BICYCLES WHERE ID = 771;
+
+CREATE INDEX IX_STATUS_BICYCLE ON Bicycles (status);
+COMMIT;
+
+exec demo();
+
+alter index IX_PRICE_ID ON borrow DISABLE;
+COMMIT;
+
+SELECT COUNT(*) FROM ISSUES;
+DELETE FROM issues;
+COMMIT;
+/
 

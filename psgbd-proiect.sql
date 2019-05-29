@@ -485,5 +485,3 @@ CREATE TABLE Valueable_pickup_points (
 
 );
 COMMIT;
-
-DROP TABLE VALUEABLE_PICKUP_POINTS;
