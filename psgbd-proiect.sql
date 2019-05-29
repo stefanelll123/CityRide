@@ -447,5 +447,43 @@ END find_overdue_borrows;
 
     RETURN v_issues_list;
   END get_bicycle_problems_reported;
+/
+CREATE OR REPLACE PROCEDURE find_most_valueble_points IS
+    v_to_return_list bicycle_id_list := bicycle_id_list();
 
+    TYPE type_point_valueble IS TABLE OF NUMBER(5,2) INDEX BY BINARY_INTEGER;
+    point_valueble type_point_valueble;
+    cursor c_pickup_points is 
+        (select id FROM PICKUP_POINTS);
+    v_pickup_points c_pickup_points%ROWTYPE;
+    v_date TIMESTAMP(6) := CURRENT_TIMESTAMP();
+    v_date_start TIMESTAMP(6) := v_date - INTERVAL '1' MONTH ;
+    v_count INTEGER;
+    v_max INTEGER;
+    v_value INTEGER;
+  BEGIN
+    DELETE FROM Valueable_pickup_points;
+    COMMIT;
 
+      FOR v_pickup_points IN c_pickup_points LOOP
+        
+          SELECT COUNT(*) INTO v_value FROM MOVE_BICYCLE WHERE FROM_POINT_ID = v_pickup_points.id OR TO_POINT_ID = v_pickup_points.id;
+          INSERT INTO VALUEABLE_PICKUP_POINTS (PICKUP_POINT_ID, value) VALUES (v_pickup_points.id, v_value);
+          COMMIT;
+      END LOOP;
+  END find_most_valueble_points;
+/
+  EXEC find_most_valueble_points;
+/
+
+CREATE TABLE Valueable_pickup_points (
+  ID NUMBER(38,0)  GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  pickup_point_id NUMBER(38, 0),
+  VALUE NUMBER(38, 0),
+
+  PRIMARY KEY (id)
+
+);
+COMMIT;
+
+DROP TABLE VALUEABLE_PICKUP_POINTS;

@@ -139,5 +139,14 @@ namespace CityRide.WebAPi.Controllers
             
             return Ok(result);
         }
+
+        [Route("pickup-points/most-valueble")]
+        [HttpGet]
+        public IActionResult GetMostValuebePickupPoint()
+        {
+            var result = _statisticRepository.GetValueble();
+
+            return Ok(result);
+        }
     }
 }

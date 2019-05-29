@@ -168,5 +168,22 @@ namespace CityRide.Database.Repositories
 
             return pricesList;
         }
+
+        public ICollection<ValueblePickupPointModel> GetValueble()
+        {
+            var pricesList = new List<ValueblePickupPointModel>();
+            try
+            {
+                Connection.Query($"begin find_most_valueble_points; end;");
+                pricesList =
+                    Connection.Query<ValueblePickupPointModel>($"SELECT * FROM (SELECT * from Valueable_pickup_points ORDER BY value DESC) WHERE ROWNUM < 5").ToList();
+            }
+            catch
+            {
+                return pricesList;
+            }
+
+            return pricesList;
+        }
     }
 }

@@ -1,4 +1,4 @@
-
+l
   CREATE OR REPLACE TYPE issues_list IS table OF number;
 
 
