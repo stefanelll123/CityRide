@@ -16,12 +16,3 @@ C:\Users\turcu\Desktop\Facultate\PSGBD\proiect\CityRide\CityRide.Service\CityRid
 C:\Users\turcu\Desktop\Facultate\PSGBD\proiect\CityRide\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.AssemblyInfo.cs
 C:\Users\turcu\Desktop\Facultate\PSGBD\proiect\CityRide\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.dll
 C:\Users\turcu\Desktop\Facultate\PSGBD\proiect\CityRide\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.pdb
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\bin\Debug\netcoreapp2.2\CityRide.Database.deps.json
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\bin\Debug\netcoreapp2.2\CityRide.Database.dll
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\bin\Debug\netcoreapp2.2\CityRide.Database.pdb
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.csprojAssemblyReference.cache
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.csproj.CoreCompileInputs.cache
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.AssemblyInfoInputs.cache
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.AssemblyInfo.cs
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.dll
-C:\Users\Victor\Documents\CityRide123213\CityRide.Service\CityRide.Database\obj\Debug\netcoreapp2.2\CityRide.Database.pdb
