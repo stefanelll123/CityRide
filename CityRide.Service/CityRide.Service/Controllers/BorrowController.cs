@@ -1,6 +1,7 @@
 ﻿using CityRide.Database.Models;
 using CityRide.Database.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CityRide.WebAPi.Controllers
 {
@@ -17,6 +18,11 @@ namespace CityRide.WebAPi.Controllers
         [HttpPost]
         public IActionResult BorrowBicycle([FromBody] BorrowModel borrowModel)
         {
+            if (checkForSQLInjection(borrowModel.QrCode))
+            {
+                return BadRequest();
+            }
+
             var result = _borrowRepository.BorrowBicycle(borrowModel);
 
             if (result == false)
@@ -27,7 +33,7 @@ namespace CityRide.WebAPi.Controllers
             return StatusCode(201);
         }
 
-        
+
         [HttpGet]
         public IActionResult BicycleExists(int userId)
         {
@@ -61,5 +67,59 @@ namespace CityRide.WebAPi.Controllers
 
             return Ok(price);
         }
+
+
+        public static Boolean checkForSQLInjection(string userInput)
+        {
+            bool isSQLInjection = false;
+
+            string[] sqlCheckList =
+            {
+                "--",
+                ";--",
+                ";",
+                "/*",
+                "*/",
+                "@@",
+                "@",
+                "char",
+                "nchar",
+                "varchar",
+                "nvarchar",
+                "alter",
+                "begin",
+                "cast",
+                "create",
+                "cursor",
+                "declare",
+                "delete",
+                "drop",
+                "end",
+                "exec",
+                "execute",
+                "fetch",
+                "insert",
+                "kill",
+                "select",
+                "sys",
+                "sysobjects",
+                "syscolumns",
+                "table",
+                "update"
+            };
+
+            string CheckString = userInput.Replace("'", "''");
+            for (int i = 0; i <= sqlCheckList.Length - 1; i++)
+            {
+                if ((CheckString.IndexOf(sqlCheckList[i],
+                         StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    isSQLInjection = true;
+                }
+            }
+
+            return isSQLInjection;
+        }
     }
 }
+
